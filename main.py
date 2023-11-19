@@ -1,4 +1,12 @@
-algo = DeepQLearning(
+import torch
+from pytorch_lightning import Trainer
+from training import DeepQLearning
+
+
+device = 'cuda:0' if torch.cuda.is_available() else 'cpu'
+num_gpus = torch.cuda.device_count()
+
+model = DeepQLearning(
     'PongNoFrameskip-v4',
     lr=1e-4,
     sigma=0.5,
@@ -15,4 +23,4 @@ trainer = Trainer(
     log_every_n_steps=1
 )
 
-trainer.fit(algo)
+trainer.fit(model)
